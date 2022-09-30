@@ -22,6 +22,7 @@ function List() {
           <div key={idx}>
             <Link to={`/product/${item.productNum}`}>
               <p>제목 : {item.title}</p>
+              <p>작성자 : {item.author.displayName}</p>
               <p>내용 : {item.content}</p>
               <hr />
             </Link>

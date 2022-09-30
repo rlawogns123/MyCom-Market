@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import firebase from '../firebase.js';
 import axios from 'axios';
 
 import styled from 'styled-components';
@@ -8,24 +9,35 @@ import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const navigate = useNavigate();
-
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
+  const [errMsg, setErrMsg] = useState('');
+
+  const loginFunc = async (e) => {
+    e.preventDefault();
+
+    if (!(email && pwd)) {
+      return alert('모든 값을 채워주세요');
+    }
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, pwd);
+      navigate('/');
+    } catch (err) {
+      if (err.code === 'auth/user-not-found') {
+        setErrMsg('존재하지 않는 이메일입니다.');
+      } else if (err.code === 'auth/wrong-password') {
+        setErrMsg('비밀번호가 일치하지 않습니다.');
+      } else {
+        setErrMsg('로그인에 실패하였습니다.');
+      }
+    }
+  };
 
   useEffect(() => {
-    let body = {
-      text: 'hello',
-    };
-    axios
-      .post('/api/test', body)
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((err) => {
-        alert('요청실패');
-        console.log(err);
-      });
-  }, []);
+    setTimeout(() => {
+      setErrMsg('');
+    }, 5000);
+  }, [errMsg]);
 
   return (
     <LoginDiv>
@@ -49,8 +61,15 @@ function Login() {
             onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Group>
+        {errMsg !== '' && <p>{errMsg}</p>}
         <ButtonDiv>
-          <Button variant="outline-dark" type="submit">
+          <Button
+            variant="outline-dark"
+            type="submit"
+            onClick={(e) => {
+              loginFunc(e);
+            }}
+          >
             로그인
           </Button>
         </ButtonDiv>
@@ -58,7 +77,8 @@ function Login() {
           <Button
             variant="outline-dark"
             type="submit"
-            onClick={() => {
+            onClick={(e) => {
+              e.preventDefault();
               navigate('/signup');
             }}
           >

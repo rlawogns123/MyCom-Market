@@ -2,12 +2,12 @@ import firebase from 'firebase/compat/app';
 import 'firebase/compat/auth';
 
 const firebaseConfig = {
-  apiKey: 'AIzaSyAMQXH3KvxCDhhBvp1lGluyrkBGDyaN74k',
-  authDomain: 'mycom-market.firebaseapp.com',
-  projectId: 'mycom-market',
-  storageBucket: 'mycom-market.appspot.com',
-  messagingSenderId: '1074072342562',
-  appId: '1:1074072342562:web:b9d3e46d0ab28ea28afa7b',
+  apiKey: 'AIzaSyD6FbJb5QvSyOdalp-bvcmWDf3qXGWZMnY',
+  authDomain: 'mycom-market-c3c43.firebaseapp.com',
+  projectId: 'mycom-market-c3c43',
+  storageBucket: 'mycom-market-c3c43.appspot.com',
+  messagingSenderId: '789218737948',
+  appId: '1:789218737948:web:f32b8b03cc676ba7a344d9',
 };
 
 firebase.initializeApp(firebaseConfig);

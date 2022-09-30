@@ -6,6 +6,10 @@ const productSchema = new mongoose.Schema(
     content: String,
     productNum: Number,
     image: String,
+    author: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   { collection: 'products' }
 );

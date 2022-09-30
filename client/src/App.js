@@ -2,19 +2,35 @@ import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
 import Login from './pages/Login';
 import Heading from './components/Heading';
-import SignUp from './pages/SignUp';
+import Signup from './pages/Signup';
 import Upload from './pages/Upload';
 import ProductDetail from './pages/ProductDetail';
 import Edit from './pages/Edit';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { loginUser, clearUser } from './reducer/userSlice.js';
+import firebase from './firebase.js';
 
 function App() {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((userInfo) => {
+      if (userInfo !== null) {
+        dispatch(loginUser(userInfo.multiFactor.user));
+      } else {
+        dispatch(clearUser());
+      }
+    });
+  }, []);
+
   return (
     <>
       <Heading />
       <Routes>
         <Route path="/" element={<MainPage />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<SignUp />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/product/:productNum" element={<ProductDetail />} />
         <Route path="/edit/:productNum" element={<Edit />} />

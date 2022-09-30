@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router-dom';
 
-function SignUp() {
+function Signup() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -15,15 +15,18 @@ function SignUp() {
   const [pwdConfirm, setPwdConfirm] = useState('');
   const [flag, setFlag] = useState(false);
 
-  const signUpFunc = async (e) => {
+  const signupFunc = async (e) => {
+    setFlag(true);
     e.preventDefault();
 
     if (!(name && email && pwd && pwdConfirm)) {
-      return alert('모든 값을 채워주세요');
+      setFlag(false);
+      alert('모든 값을 채워주세요');
     }
 
     if (pwd !== pwdConfirm) {
-      return alert('비밀번호와 비밀번호 확인 값이 다릅니다.');
+      setFlag(false);
+      alert('비밀번호와 비밀번호 확인 값이 다릅니다.');
     }
 
     const createdUser = await firebase
@@ -34,15 +37,16 @@ function SignUp() {
       displayName: name,
     });
 
+    console.log(createdUser.user);
+
     const body = {
-      emial: createdUser.user.multiFactor.user.email,
+      email: createdUser.user.multiFactor.user.email,
       displayName: createdUser.user.multiFactor.user.displayName,
       uid: createdUser.user.multiFactor.user.uid,
     };
 
-    // console.log(body);
     axios.post('/api/user/signup', body).then((res) => {
-      setFlag(true);
+      setFlag(false);
       if (res.data.success) {
         navigate('/login');
       } else {
@@ -54,7 +58,7 @@ function SignUp() {
   return (
     <LoginDiv>
       <Form>
-        <Form.Group className="mb-3" controlId="formBasicEmail">
+        <Form.Group className="mb-3" controlId="formBasicName">
           <Form.Label>닉네임</Form.Label>
           <Form.Control
             type="text"
@@ -82,7 +86,7 @@ function SignUp() {
             onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        <Form.Group className="mb-3" controlId="formBasicPasswordConfirm">
           <Form.Label>비밀번호 확인</Form.Label>
           <Form.Control
             type="password"
@@ -96,7 +100,10 @@ function SignUp() {
           <Button
             disabled={flag}
             variant="outline-dark"
-            onClick={(e) => signUpFunc(e)}
+            onClick={(e) => {
+              e.preventDefault();
+              signupFunc(e);
+            }}
           >
             회원가입
           </Button>
@@ -106,7 +113,7 @@ function SignUp() {
   );
 }
 
-export default SignUp;
+export default Signup;
 
 const LoginDiv = styled.div`
   width: 50%;

@@ -11,8 +11,8 @@ app.use(express.static(path.join(__dirname, '../client/build'))); // static파�
 // 클라이언트로 부터 받은 http 요청 메세지 형식에서 body 데이터를 해석
 app.use(express.json()); // JSON 형태의 데이터를 해석
 app.use(express.urlencoded({ extended: true })); // x-www.form-urlencoded 형태의 데이터를 해석
-app.use('/api/user', require('./router/user.js'));
 app.use('/api/product', require('./router/product.js'));
+app.use('/api/user', require('./router/user.js'));
 app.use('/image', express.static('./image'));
 
 // const { Product } = require('./model/Product.js');

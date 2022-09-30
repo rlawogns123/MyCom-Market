@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 import Spinner from 'react-bootstrap/Spinner';
 
@@ -10,6 +11,7 @@ function ProductDetail() {
   const navigate = useNavigate();
   const [productInfo, setProductInfo] = useState({});
   const [flag, setFlag] = useState(false);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
     const body = {
@@ -49,7 +51,8 @@ function ProductDetail() {
         <>
           <div>
             {' '}
-            <p>{productInfo.title}</p>
+            <h1>{productInfo.title}</h1>
+            <h2>{productInfo.author.displayName}</h2>
             {productInfo.image ? (
               <img
                 src={productInfo.image}
@@ -59,18 +62,21 @@ function ProductDetail() {
             ) : null}
             <p>{productInfo.content}</p>
           </div>
-          <div>
-            <Link to={`/edit/${productInfo.productNum}`}>
-              <button>수정</button>
-            </Link>
-            <button
-              onClick={() => {
-                deleteHandler();
-              }}
-            >
-              삭제
-            </button>
-          </div>
+
+          {user.uid === productInfo.author.uid && (
+            <div>
+              <Link to={`/edit/${productInfo.productNum}`}>
+                <button>수정</button>
+              </Link>
+              <button
+                onClick={() => {
+                  deleteHandler();
+                }}
+              >
+                삭제
+              </button>
+            </div>
+          )}
         </>
       ) : (
         <Spinner animation="border" role="status">

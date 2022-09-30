@@ -1,13 +1,23 @@
 import axios from 'axios';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../components/ImageUpload';
+import { useSelector } from 'react-redux';
 
 function Upload() {
   const navigate = useNavigate();
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
+
+  const user = useSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!user.accessToken) {
+      alert('로그인한 회원만 글을 작성할 수 있습니다.');
+      navigate('/login');
+    }
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
@@ -19,6 +29,7 @@ function Upload() {
       title: title,
       content: content,
       image: image,
+      uid: user.uid,
     };
 
     axios
