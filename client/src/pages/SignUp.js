@@ -1,30 +1,85 @@
-import React from 'react';
+import React, { useState } from 'react';
+import firebase from '../firebase.js';
+import axios from 'axios';
 
 import styled from 'styled-components';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import { useNavigate } from 'react-router-dom';
 
 function SignUp() {
+  const navigate = useNavigate();
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [pwdConfirm, setPwdConfirm] = useState('');
+  const [flag, setFlag] = useState(false);
+
+  const signUpFunc = async (e) => {
+    e.preventDefault();
+
+    if (!(name && email && pwd && pwdConfirm)) {
+      return alert('모든 값을 채워주세요');
+    }
+
+    if (pwd !== pwdConfirm) {
+      return alert('비밀번호와 비밀번호 확인 값이 다릅니다.');
+    }
+
+    const createdUser = await firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, pwd);
+
+    await createdUser.user.updateProfile({
+      displayName: name,
+    });
+
+    const body = {
+      emial: createdUser.user.multiFactor.user.email,
+      displayName: createdUser.user.multiFactor.user.displayName,
+      uid: createdUser.user.multiFactor.user.uid,
+    };
+
+    // console.log(body);
+    axios.post('/api/user/signup', body).then((res) => {
+      setFlag(true);
+      if (res.data.success) {
+        navigate('/login');
+      } else {
+        return alert('회원가입이 실패하였습니다.');
+      }
+    });
+  };
+
   return (
     <LoginDiv>
       <Form>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>닉네임</Form.Label>
-          <Form.Control type="email" placeholder="닉네임" />
-          <Form.Text className="text-muted"></Form.Text>
+          <Form.Control
+            type="text"
+            placeholder="닉네임"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>이메일</Form.Label>
-          <Form.Control type="email" placeholder="이메일" />
-          <Form.Text className="text-muted"></Form.Text>
+          <Form.Control
+            type="email"
+            placeholder="이메일"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
         </Form.Group>
-
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>비밀번호(8자리 이상)</Form.Label>
           <Form.Control
             type="password"
             placeholder="비밀번호(8자리 이상)"
             minLength={8}
+            value={pwd}
+            onChange={(e) => setPwd(e.target.value)}
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
@@ -33,10 +88,16 @@ function SignUp() {
             type="password"
             placeholder="비밀번호(8자리 이상)"
             minLength={8}
+            value={pwdConfirm}
+            onChange={(e) => setPwdConfirm(e.target.value)}
           />
         </Form.Group>
         <ButtonDiv>
-          <Button variant="outline-dark" type="submit">
+          <Button
+            disabled={flag}
+            variant="outline-dark"
+            onClick={(e) => signUpFunc(e)}
+          >
             회원가입
           </Button>
         </ButtonDiv>
