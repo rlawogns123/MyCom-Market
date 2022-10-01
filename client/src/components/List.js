@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Avatar from 'react-avatar';
 
 import Card from 'react-bootstrap/Card';
 
@@ -23,9 +24,19 @@ function List() {
           <Card key={idx} style={{ margin: '30px' }}>
             <Link
               to={`/product/${item.productNum}`}
-              style={{ color: 'black', textDecoration: 'none' }}
+              style={{
+                color: 'black',
+                textDecoration: 'none',
+                marginLeft: ' 10px',
+              }}
             >
               <p>{item.title}</p>
+              <Avatar
+                size="40"
+                round={true}
+                src={item.author.photoURL}
+                style={{ marginBottom: '10px' }}
+              />
               <p>{item.author.displayName}</p>
               {item.image ? (
                 <img

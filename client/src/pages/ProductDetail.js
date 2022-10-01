@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import Avatar from 'react-avatar';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -33,9 +34,17 @@ function ProductDetail({ productInfo }) {
   return (
     <ProductContainer>
       <Card>
-        <Card.Title>
+        <Card.Title style={{ marginLeft: '10px' }}>
           <h1>{productInfo.title}</h1>
-          <h2>{productInfo.author.displayName}</h2>
+          <h2 style={{ marginTop: '20px' }}>
+            <Avatar
+              size="40"
+              round={true}
+              src={productInfo.author.photoURL}
+              style={{ marginRight: '10px' }}
+            />
+            {productInfo.author.displayName}
+          </h2>
         </Card.Title>
         {productInfo.image ? (
           <Card.Img

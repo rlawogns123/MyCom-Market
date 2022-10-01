@@ -6,6 +6,7 @@ import Signup from './pages/Signup';
 import Upload from './pages/Upload';
 import Product from './pages/Product';
 import Edit from './pages/Edit';
+import MyPage from './pages/MyPage';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser, clearUser } from './reducer/userSlice.js';
@@ -29,8 +30,9 @@ function App() {
       <Heading />
       <Routes>
         <Route path="/" element={<MainPage />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/mypage" element={<MyPage />} />
         <Route path="/upload" element={<Upload />} />
         <Route path="/product/:productNum" element={<Product />} />
         <Route path="/edit/:productNum" element={<Edit />} />

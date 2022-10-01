@@ -45,6 +45,8 @@ function Signup() {
 
     await createdUser.user.updateProfile({
       displayName: name,
+      photoURL:
+        'https://kr.object.ncloudstorage.com/mycom-market/default_image.jpg',
     });
 
     console.log(createdUser.user);
@@ -53,6 +55,8 @@ function Signup() {
       email: createdUser.user.multiFactor.user.email,
       displayName: createdUser.user.multiFactor.user.displayName,
       uid: createdUser.user.multiFactor.user.uid,
+      photoURL:
+        'https://kr.object.ncloudstorage.com/mycom-market/default_image.jpg',
     };
 
     axios.post('/api/user/signup', body).then((res) => {

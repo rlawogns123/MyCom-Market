@@ -14,6 +14,7 @@ function Heading() {
   const logoutFunc = () => {
     firebase.auth().signOut();
     navigate('/');
+    // window.location.reload();
   };
 
   return (
@@ -34,14 +35,29 @@ function Heading() {
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             {user.accessToken ? (
-              <Navbar.Text
-                style={{ color: 'white', cursor: 'pointer' }}
-                onClick={() => {
-                  logoutFunc();
-                }}
-              >
-                로그아웃
-              </Navbar.Text>
+              <>
+                <Navbar.Text
+                  style={{
+                    color: 'white',
+                    cursor: 'pointer',
+                    marginRight: '20px',
+                  }}
+                  onClick={() => {
+                    logoutFunc();
+                  }}
+                >
+                  로그아웃
+                </Navbar.Text>
+                <br />
+                <Navbar.Text
+                  style={{ color: 'white', cursor: 'pointer' }}
+                  onClick={() => {
+                    navigate('/mypage');
+                  }}
+                >
+                  마이페이지
+                </Navbar.Text>
+              </>
             ) : (
               <Link
                 to="/login"

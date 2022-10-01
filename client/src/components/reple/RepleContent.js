@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
+import Avatar from 'react-avatar';
 
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -58,6 +59,12 @@ function RepleContent({ reple }) {
   return (
     <Card border="secondary" style={{ width: '80%', margin: '40px auto' }}>
       <Card.Header>
+        <Avatar
+          size="30"
+          round={true}
+          src={reple.author.photoURL}
+          style={{ marginRight: '10px' }}
+        />
         {reple.author.displayName}
         {reple.author.uid === user.uid && (
           <span
