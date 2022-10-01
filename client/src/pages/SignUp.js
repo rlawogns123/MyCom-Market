@@ -10,6 +10,8 @@ import { useNavigate } from 'react-router-dom';
 function Signup() {
   const navigate = useNavigate();
   const [name, setName] = useState('');
+  const [nameCheck, setNameCheck] = useState(false);
+  const [validName, setValidName] = useState('');
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [pwdConfirm, setPwdConfirm] = useState('');
@@ -22,11 +24,19 @@ function Signup() {
     if (!(name && email && pwd && pwdConfirm)) {
       setFlag(false);
       alert('모든 값을 채워주세요');
+      return;
     }
 
     if (pwd !== pwdConfirm) {
       setFlag(false);
       alert('비밀번호와 비밀번호 확인 값이 다릅니다.');
+      return;
+    }
+
+    if (!nameCheck) {
+      setFlag(false);
+      alert('닉네임 중복검사를 해주세요');
+      return;
     }
 
     const createdUser = await firebase
@@ -55,6 +65,27 @@ function Signup() {
     });
   };
 
+  const nameCheckFunc = (e) => {
+    e.preventDefault();
+    if (!name) {
+      return alert('닉네임을 입력해주세요');
+    }
+
+    const body = {
+      displayName: name,
+    };
+    axios.post('/api/user/namecheck', body).then((res) => {
+      if (res.data.success) {
+        if (res.data.check) {
+          setNameCheck(true);
+          setValidName('사용 가능한 닉네임입니다.');
+        } else {
+          setValidName('사용 불가능한 닉네임입니다.(중복)');
+        }
+      }
+    });
+  };
+
   return (
     <LoginDiv>
       <Form>
@@ -67,6 +98,18 @@ function Signup() {
             onChange={(e) => setName(e.target.value)}
           />
         </Form.Group>
+        <p>{validName}</p>
+        <ButtonDiv>
+          <Button
+            variant="outline-dark"
+            style={{ width: '100%' }}
+            onClick={(e) => {
+              nameCheckFunc(e);
+            }}
+          >
+            닉네임 중복검사
+          </Button>
+        </ButtonDiv>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>이메일</Form.Label>
           <Form.Control
@@ -100,6 +143,7 @@ function Signup() {
           <Button
             disabled={flag}
             variant="outline-dark"
+            style={{ marginTop: '25px', width: '100%' }}
             onClick={(e) => {
               e.preventDefault();
               signupFunc(e);
@@ -123,6 +167,7 @@ const LoginDiv = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  margin-top: 40px;
+  margin-top: 15px;
+  margin-bottom: 15px;
   text-align: center;
 `;
