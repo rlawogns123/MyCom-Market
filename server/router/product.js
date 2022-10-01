@@ -61,6 +61,7 @@ router.post('/edit', (req, res) => {
   const temp = {
     title: req.body.title,
     content: req.body.content,
+    image: req.body.image,
   };
   Product.updateOne(
     { productNum: Number(req.body.productNum) },

@@ -3,6 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ImageUpload from '../components/ImageUpload';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function Upload() {
   const navigate = useNavigate();
@@ -21,6 +25,7 @@ function Upload() {
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (title === '' || content === '') {
       return alert('모든 항목을 채워주세요!');
     }
@@ -48,27 +53,49 @@ function Upload() {
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="title">제목</label>
-        <input
+    <UploadContainer>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>제목</Form.Label>
+        <Form.Control
           type="text"
-          id="title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <ImageUpload setImage={setImage} />
-        <label htmlFor="content">내용</label>
-        <input
-          type="text"
-          id="content"
+      </Form.Group>
+      <ImageUpload setImage={setImage} />
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label style={{ marginTop: '20px' }}>내용</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={14}
           value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <button onClick={(e) => onSubmit(e)}>제출</button>
-      </form>
-    </div>
+        <ButtonDiv>
+          <Button
+            variant="outline-dark"
+            type="submit"
+            onClick={(e) => onSubmit(e)}
+          >
+            등록
+          </Button>
+        </ButtonDiv>
+      </Form.Group>
+    </UploadContainer>
   );
 }
 
 export default Upload;
+
+const UploadContainer = styled.div`
+  margin: 30px auto;
+  width: 60%;
+  @media (max-width: 756px) {
+    width: 70%;
+  }
+`;
+
+const ButtonDiv = styled.div`
+  margin-top: 15px;
+  text-align: right;
+`;

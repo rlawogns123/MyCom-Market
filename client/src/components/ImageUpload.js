@@ -8,7 +8,6 @@ function ImageUpload({ setImage }) {
     formData.append('file', e.target.files[0]);
     axios.post('/api/product/image/upload', formData).then((res) => {
       setImage(res.data.filePath);
-      console.log(res.data);
     });
   };
 

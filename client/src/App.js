@@ -4,7 +4,7 @@ import Login from './pages/Login';
 import Heading from './components/Heading';
 import Signup from './pages/Signup';
 import Upload from './pages/Upload';
-import ProductDetail from './pages/ProductDetail';
+import Product from './pages/Product';
 import Edit from './pages/Edit';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
@@ -32,7 +32,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/upload" element={<Upload />} />
-        <Route path="/product/:productNum" element={<ProductDetail />} />
+        <Route path="/product/:productNum" element={<Product />} />
         <Route path="/edit/:productNum" element={<Edit />} />
       </Routes>
     </>

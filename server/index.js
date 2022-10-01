@@ -13,6 +13,7 @@ app.use(express.json()); // JSON 형태의 데이터를 해석
 app.use(express.urlencoded({ extended: true })); // x-www.form-urlencoded 형태의 데이터를 해석
 app.use('/api/product', require('./router/product.js'));
 app.use('/api/user', require('./router/user.js'));
+app.use('/api/reple', require('./router/reple.js'));
 app.use('/image', express.static('./image'));
 
 // const { Product } = require('./model/Product.js');

@@ -3,6 +3,10 @@ import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ImageUpload from '../components/ImageUpload';
 import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 function Edit() {
   const params = useParams();
@@ -63,35 +67,59 @@ function Edit() {
   };
 
   return (
-    <div>
-      <form>
-        <label htmlFor="title">제목</label>
-        <input
+    <UploadContainer>
+      <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+        <Form.Label>제목</Form.Label>
+        <Form.Control
           type="text"
-          id="title"
-          value={title || ''}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <ImageUpload setImage={setImage} />
-        <label htmlFor="content">내용</label>
-        <input
-          type="text"
-          id="content"
-          value={content || ''}
+      </Form.Group>
+      <ImageUpload setImage={setImage} />
+      <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+        <Form.Label style={{ marginTop: '20px' }}>내용</Form.Label>
+        <Form.Control
+          as="textarea"
+          rows={14}
+          value={content}
           onChange={(e) => setContent(e.target.value)}
         />
-        <button onClick={(e) => onSubmit(e)}>제출</button>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            navigate(-1);
-          }}
-        >
-          취소
-        </button>
-      </form>
-    </div>
+        <ButtonDiv>
+          <Button
+            variant="outline-dark"
+            type="submit"
+            onClick={(e) => onSubmit(e)}
+          >
+            등록
+          </Button>
+          <Button
+            variant="outline-dark"
+            style={{ marginLeft: '15px' }}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate(-1);
+            }}
+          >
+            취소
+          </Button>
+        </ButtonDiv>
+      </Form.Group>
+    </UploadContainer>
   );
 }
 
 export default Edit;
+
+const UploadContainer = styled.div`
+  margin: 30px auto;
+  width: 60%;
+  @media (max-width: 756px) {
+    width: 70%;
+  }
+`;
+
+const ButtonDiv = styled.div`
+  margin-top: 15px;
+  text-align: right;
+`;

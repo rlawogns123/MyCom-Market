@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
 import styled from 'styled-components';
+
+import Card from 'react-bootstrap/Card';
 
 function List() {
   const [productList, setProductList] = useState([]);
@@ -16,25 +17,42 @@ function List() {
       .catch((err) => console.log(err));
   }, []);
   return (
-    <div>
+    <ListDiv>
       {productList?.map((item, idx) => {
         return (
-          <div key={idx}>
-            <Link to={`/product/${item.productNum}`}>
-              <p>제목 : {item.title}</p>
-              <p>작성자 : {item.author.displayName}</p>
-              <p>내용 : {item.content}</p>
-              <hr />
+          <Card key={idx} style={{ margin: '30px' }}>
+            <Link
+              to={`/product/${item.productNum}`}
+              style={{ color: 'black', textDecoration: 'none' }}
+            >
+              <p>{item.title}</p>
+              <p>{item.author.displayName}</p>
+              {item.image ? (
+                <img
+                  src={item.image}
+                  alt=""
+                  style={{ width: '100%', height: 'auto' }}
+                />
+              ) : null}
             </Link>
-          </div>
+          </Card>
         );
       })}
-    </div>
+    </ListDiv>
   );
 }
 
 export default List;
 
-const ListDiv = styled.div``;
-
-const ListItem = styled.div``;
+const ListDiv = styled.div`
+  margin: 50px auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  width: 50%;
+  @media (max-width: 756px) {
+    width: 90%;
+  }
+  @media (max-width: 1024px) {
+    width: 90%;
+  }
+`;

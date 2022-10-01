@@ -66,6 +66,7 @@ function Login() {
           <Button
             variant="outline-dark"
             type="submit"
+            style={{ width: '100%' }}
             onClick={(e) => {
               loginFunc(e);
             }}
@@ -77,6 +78,7 @@ function Login() {
           <Button
             variant="outline-dark"
             type="submit"
+            style={{ width: '100%' }}
             onClick={(e) => {
               e.preventDefault();
               navigate('/signup');

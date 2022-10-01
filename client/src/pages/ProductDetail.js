@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import styled from 'styled-components';
 
-import Spinner from 'react-bootstrap/Spinner';
+import Button from 'react-bootstrap/Button';
+import Card from 'react-bootstrap/Card';
 
-function ProductDetail() {
+function ProductDetail({ productInfo }) {
   const params = useParams();
   const navigate = useNavigate();
-  const [productInfo, setProductInfo] = useState({});
-  const [flag, setFlag] = useState(false);
   const user = useSelector((state) => state.user);
-
-  useEffect(() => {
-    const body = {
-      productNum: params.productNum,
-    };
-    axios
-      .post('/api/product/detail', body)
-      .then((res) => {
-        if (res.data.success) {
-          setProductInfo(res.data.product);
-          setFlag(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
   const deleteHandler = () => {
     if (window.confirm('정말로 삭제하시겠습니까?')) {
@@ -46,45 +31,56 @@ function ProductDetail() {
   };
 
   return (
-    <div>
-      {flag ? (
-        <>
-          <div>
-            {' '}
-            <h1>{productInfo.title}</h1>
-            <h2>{productInfo.author.displayName}</h2>
-            {productInfo.image ? (
-              <img
-                src={productInfo.image}
-                alt=""
-                style={{ width: '100%', height: 'auto' }}
-              />
-            ) : null}
-            <p>{productInfo.content}</p>
-          </div>
-
-          {user.uid === productInfo.author.uid && (
-            <div>
-              <Link to={`/edit/${productInfo.productNum}`}>
-                <button>수정</button>
-              </Link>
-              <button
-                onClick={() => {
-                  deleteHandler();
-                }}
-              >
-                삭제
-              </button>
-            </div>
-          )}
-        </>
-      ) : (
-        <Spinner animation="border" role="status">
-          <span className="visually-hidden">Loading...</span>
-        </Spinner>
-      )}
-    </div>
+    <ProductContainer>
+      <Card>
+        <Card.Title>
+          <h1>{productInfo.title}</h1>
+          <h2>{productInfo.author.displayName}</h2>
+        </Card.Title>
+        {productInfo.image ? (
+          <Card.Img
+            variant="top"
+            src={productInfo.image}
+            alt=""
+            style={{ width: '100%', height: 'auto' }}
+          />
+        ) : null}
+        <Card.Body>
+          <Card.Text>{productInfo.content}</Card.Text>
+        </Card.Body>
+        {user.uid === productInfo.author.uid && (
+          <ButtonDiv>
+            <Link to={`/edit/${productInfo.productNum}`}>
+              <Button variant="outline-dark">수정</Button>
+            </Link>
+            <Button
+              variant="outline-dark"
+              style={{ marginLeft: '15px' }}
+              onClick={() => {
+                deleteHandler();
+              }}
+            >
+              삭제
+            </Button>
+          </ButtonDiv>
+        )}
+      </Card>
+    </ProductContainer>
   );
 }
 
 export default ProductDetail;
+
+const ProductContainer = styled.div`
+  margin: 40px auto;
+  width: 40%;
+  @media (max-width: 756px) {
+    width: 70%;
+  }
+`;
+
+const ButtonDiv = styled.div`
+  /* margin-top: 15px; */
+  margin: 15px;
+  text-align: right;
+`;

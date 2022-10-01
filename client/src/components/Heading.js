@@ -24,17 +24,23 @@ function Heading() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Link to="/upload">upload</Link>
+              <Link
+                to="/upload"
+                style={{ color: 'white', textDecoration: 'none' }}
+              >
+                업로드
+              </Link>
             </Nav>
           </Navbar.Collapse>
           <Navbar.Collapse className="justify-content-end">
             {user.accessToken ? (
               <Navbar.Text
+                style={{ color: 'white', cursor: 'pointer' }}
                 onClick={() => {
                   logoutFunc();
                 }}
               >
-                Logout
+                로그아웃
               </Navbar.Text>
             ) : (
               <Link
@@ -45,7 +51,7 @@ function Heading() {
                   marginRight: '10px',
                 }}
               >
-                login
+                로그인
               </Link>
             )}
           </Navbar.Collapse>
