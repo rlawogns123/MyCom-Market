@@ -14,7 +14,6 @@ function Heading() {
   const logoutFunc = () => {
     firebase.auth().signOut();
     navigate('/');
-    // window.location.reload();
   };
 
   return (

@@ -3,8 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import RepleContent from './RepleContent';
 
-import Card from 'react-bootstrap/Card';
-
 function RepleList({ productId }) {
   const [repleList, setRepleList] = useState([]);
   let body = {

@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import axios from 'axios';
 import Avatar from 'react-avatar';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
@@ -54,6 +56,14 @@ function RepleContent({ reple }) {
           alert('댓글 삭제에 실패하였습니다.');
         });
     }
+  };
+
+  const setTime = (createdAt, updatedAt) => {
+    if (createdAt !== updatedAt) {
+      return moment(updatedAt).format('YYYY년 MMMM Do') + ' (수정됨)';
+    } else {
+    }
+    return moment(createdAt).format('YYYY년 MMMM Do');
   };
 
   return (
@@ -138,7 +148,12 @@ function RepleContent({ reple }) {
             </Form.Group>
           </RepleContainer>
         ) : (
-          <Card.Text>{reple.reple}</Card.Text>
+          <Card.Text>
+            <p style={{ textAlign: 'right' }}>
+              {setTime(reple.createdAt, reple.updatedAt)}
+            </p>
+            <span style={{ marginRight: '4rem' }}>{reple.reple}</span>
+          </Card.Text>
         )}
       </Card.Body>
     </Card>

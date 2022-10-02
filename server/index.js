@@ -5,19 +5,13 @@ const app = express();
 const port = 4000;
 const config = require('./config/key.js');
 
-// mongodb+srv://rlawogns:950326@mycommarket.18rbvi2.mongodb.net/?retryWrites=true&w=majority
-
-app.use(express.static(path.join(__dirname, '../client/build'))); // static파일 경로ㅍ
-// 클라이언트로 부터 받은 http 요청 메세지 형식에서 body 데이터를 해석
-app.use(express.json()); // JSON 형태의 데이터를 해석
-app.use(express.urlencoded({ extended: true })); // x-www.form-urlencoded 형태의 데이터를 해석
+app.use(express.static(path.join(__dirname, '../client/build')));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use('/api/product', require('./router/product.js'));
 app.use('/api/user', require('./router/user.js'));
 app.use('/api/reple', require('./router/reple.js'));
 app.use('/image', express.static('./image'));
-
-// const { Product } = require('./model/Product.js');
-// const { Counter } = require('./model/Counter.js');
 
 app.listen(port, () => {
   mongoose

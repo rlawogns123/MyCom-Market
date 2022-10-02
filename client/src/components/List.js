@@ -1,22 +1,21 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import Avatar from 'react-avatar';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 import Card from 'react-bootstrap/Card';
 
-function List() {
-  const [productList, setProductList] = useState([]);
+function List({ productList }) {
+  const setTime = (createdAt, updatedAt) => {
+    if (createdAt !== updatedAt) {
+      return moment(updatedAt).format('YYYY년 MMMM Do') + ' (수정됨)';
+    } else {
+    }
+    return moment(createdAt).format('YYYY년 MMMM Do');
+  };
 
-  useEffect(() => {
-    axios
-      .post('/api/product/list')
-      .then((res) => {
-        setProductList([...res.data.productList]);
-      })
-      .catch((err) => console.log(err));
-  }, []);
   return (
     <ListDiv>
       {productList?.map((item, idx) => {
@@ -30,14 +29,17 @@ function List() {
                 marginLeft: ' 10px',
               }}
             >
-              <p>{item.title}</p>
+              <p>
+                {item.title} ({item.repleNum})
+              </p>
               <Avatar
                 size="40"
                 round={true}
                 src={item.author.photoURL}
                 style={{ marginBottom: '10px' }}
               />
-              <p>{item.author.displayName}</p>
+              <p>{item.author.displayName} </p>
+              <p>{setTime(item.createdAt, item.updatedAt)}</p>
               {item.image ? (
                 <img
                   src={item.image}
@@ -60,9 +62,6 @@ const ListDiv = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   width: 50%;
-  @media (max-width: 756px) {
-    width: 90%;
-  }
   @media (max-width: 1024px) {
     width: 90%;
   }

@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
   },
-  { collection: 'products' }
+  { collection: 'products', timestamps: true }
 );
 
 const Product = mongoose.model('Product', productSchema);

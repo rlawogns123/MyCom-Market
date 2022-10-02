@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import Avatar from 'react-avatar';
+import moment from 'moment';
+import 'moment/locale/ko';
 
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
@@ -31,6 +33,14 @@ function ProductDetail({ productInfo }) {
     }
   };
 
+  const setTime = (createdAt, updatedAt) => {
+    if (createdAt !== updatedAt) {
+      return moment(updatedAt).format('YYYY년 MMMM Do') + ' (수정됨)';
+    } else {
+    }
+    return moment(createdAt).format('YYYY년 MMMM Do');
+  };
+
   return (
     <ProductContainer>
       <Card>
@@ -44,6 +54,16 @@ function ProductDetail({ productInfo }) {
               style={{ marginRight: '10px' }}
             />
             {productInfo.author.displayName}
+            <p
+              style={{
+                textAlign: 'right',
+                marginTop: '10px',
+                marginRight: '10px',
+                fontSize: '15px',
+              }}
+            >
+              {setTime(productInfo.createdAt, productInfo.updatedAt)}
+            </p>
           </h2>
         </Card.Title>
         {productInfo.image ? (
@@ -89,7 +109,6 @@ const ProductContainer = styled.div`
 `;
 
 const ButtonDiv = styled.div`
-  /* margin-top: 15px; */
   margin: 15px;
   text-align: right;
 `;

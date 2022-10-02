@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import ImageUpload from '../components/ImageUpload';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import Form from 'react-bootstrap/Form';

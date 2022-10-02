@@ -54,31 +54,29 @@ function MyPage() {
   };
 
   return (
-    <div>
-      <AvatarForm>
-        <label>
-          <input
-            type="file"
-            accept="image/*"
-            style={{ display: 'none' }}
-            onChange={(e) => imageUpload(e)}
-          />
-          <Avatar
-            size="100"
-            round={true}
-            src={currentImage}
-            style={{ cursor: 'pointer' }}
-          />
-        </label>
-        <Button
-          variant="outline-dark"
-          style={{ marginTop: '20px' }}
-          onClick={(e) => saveProfile(e)}
-        >
-          저장
-        </Button>
-      </AvatarForm>
-    </div>
+    <AvatarForm>
+      <label>
+        <input
+          type="file"
+          accept="image/*"
+          style={{ display: 'none' }}
+          onChange={(e) => imageUpload(e)}
+        />
+        <Avatar
+          size="200"
+          round={true}
+          src={currentImage}
+          style={{ cursor: 'pointer' }}
+        />
+      </label>
+      <Button
+        variant="outline-dark"
+        style={{ marginTop: '20px' }}
+        onClick={(e) => saveProfile(e)}
+      >
+        저장
+      </Button>
+    </AvatarForm>
   );
 }
 
@@ -90,5 +88,5 @@ const AvatarForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 80px;
 `;

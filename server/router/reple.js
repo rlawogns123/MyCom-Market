@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// const multer = require('multer');
 
 const { Product } = require('../model/Product.js');
 const { Reple } = require('../model/Reple.js');
