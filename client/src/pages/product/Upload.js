@@ -1,44 +1,31 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import ImageUpload from '../components/ImageUpload';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import ImageUpload from '../../components/product/ImageUpload';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-function Edit() {
-  const params = useParams();
+function Upload() {
   const navigate = useNavigate();
-  const [productInfo, setProductInfo] = useState({});
-  const [flag, setFlag] = useState(false);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
   const [image, setImage] = useState('');
 
-  useEffect(() => {
-    const body = {
-      productNum: params.productNum,
-    };
-    axios
-      .post('/api/product/detail', body)
-      .then((res) => {
-        if (res.data.success) {
-          setProductInfo(res.data.product);
-          setFlag(true);
-        }
-      })
-      .catch((err) => console.log(err));
-  }, []);
+  const user = useSelector((state) => state.user);
 
   useEffect(() => {
-    setTitle(productInfo.title);
-    setContent(productInfo.content);
-    setImage(productInfo.image);
-  }, [productInfo]);
+    if (user.isLoading && !user.accessToken) {
+      alert('로그인한 회원만 글을 작성할 수 있습니다.');
+      navigate('/login');
+    }
+  }, []);
 
   const onSubmit = (e) => {
     e.preventDefault();
+
     if (title === '' || content === '') {
       return alert('모든 항목을 채워주세요!');
     }
@@ -47,17 +34,17 @@ function Edit() {
       title: title,
       content: content,
       image: image,
-      productNum: params.productNum,
+      uid: user.uid,
     };
 
     axios
-      .post('/api/product/edit', body)
+      .post('/api/product/submit', body)
       .then((res) => {
         if (res.data.success) {
-          alert('글 수정이 완료되었습니다.');
-          navigate(`/product/${params.productNum}`);
+          alert('글 작성이 완료되었습니다.');
+          navigate('/');
         } else {
-          alert('글 수정에 실패하였습니다');
+          alert('글 작성에 실패하였습니다');
         }
       })
       .catch((err) => {
@@ -92,23 +79,13 @@ function Edit() {
           >
             등록
           </Button>
-          <Button
-            variant="outline-dark"
-            style={{ marginLeft: '15px' }}
-            onClick={(e) => {
-              e.preventDefault();
-              navigate(-1);
-            }}
-          >
-            취소
-          </Button>
         </ButtonDiv>
       </Form.Group>
     </UploadContainer>
   );
 }
 
-export default Edit;
+export default Upload;
 
 const UploadContainer = styled.div`
   margin: 30px auto;

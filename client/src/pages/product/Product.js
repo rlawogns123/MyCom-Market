@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import ProductDetail from './ProductDetail';
-import Reple from '../components/reple/Reple';
+import ProductDetail from '../../components/product/ProductDetail';
+import Reple from '../../components/reple/Reple';
 import axios from 'axios';
 
 import Spinner from 'react-bootstrap/Spinner';

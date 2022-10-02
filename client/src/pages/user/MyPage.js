@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import Avatar from 'react-avatar';
 import styled from 'styled-components';
 import axios from 'axios';
-import firebase from '../firebase.js';
+import firebase from '../../firebase.js';
 
 import Button from 'react-bootstrap/Button';
 

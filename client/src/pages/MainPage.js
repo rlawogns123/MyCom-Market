@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import List from '../components/List';
+import List from '../components/product/List';
 import axios from 'axios';
 import styled from 'styled-components';
 
@@ -85,11 +85,11 @@ function MainPage() {
           </Dropdown.Item>
           <Dropdown.Item
             onClick={() => {
-              setSort('인기순');
+              setSort('댓글순');
               setLoadMore(true);
             }}
           >
-            인기순
+            댓글순
           </Dropdown.Item>
         </DropdownButton>
       </SearchDiv>

@@ -1,12 +1,12 @@
 import { Routes, Route } from 'react-router-dom';
 import MainPage from './pages/MainPage';
-import Login from './pages/Login';
 import Heading from './components/Heading';
-import Signup from './pages/Signup';
-import Upload from './pages/Upload';
-import Product from './pages/Product';
-import Edit from './pages/Edit';
-import MyPage from './pages/MyPage';
+import Signup from './pages/user/Signup';
+import Login from './pages/user/Login';
+import MyPage from './pages/user/MyPage';
+import Upload from './pages/product/Upload';
+import Product from './pages/product/Product';
+import Edit from './pages/product/Edit';
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { loginUser, clearUser } from './reducer/userSlice.js';

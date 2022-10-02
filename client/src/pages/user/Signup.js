@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import firebase from '../firebase.js';
+import firebase from '../../firebase.js';
 import axios from 'axios';
 
 import styled from 'styled-components';
