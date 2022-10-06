@@ -4,6 +4,7 @@
 
 <div>
     <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=white">
+    <img src="https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=white">
     <img src="https://img.shields.io/badge/redux-764ABC?style=for-the-badge&logo=redux&logoColor=white">
     <img src="https://img.shields.io/badge/MongoDB-47A248?style=for-the-badge&logo=mongodb&logoColor=white">
     <img src="https://img.shields.io/badge/express-000000?style=for-the-badge&logo=express&logoColor=white">
@@ -117,8 +118,8 @@ npm start
 ## 폴더구조
 
 ```
-MyComMarket
-├─ App
+App
+├─ client
 │  └─ src
 │     ├─ App.js
 │     ├─ components
@@ -148,23 +149,24 @@ MyComMarket
 │     │  ├─ store.js
 │     │  └─ userSlice.js
 │     └─ setupProxy.js
-│  ├─ index.js
-│  ├─ package.json
-│  ├─ Procfile
-│  └─ server
-│     ├─ config
-│     │  ├─ key.js
-│     │  └─ production.js
-│     ├─ model
-│     │  ├─ Counter.js
-│     │  ├─ Product.js
-│     │  ├─ Reple.js
-│     │  └─ User.js
-│     ├─ router
-│     │  ├─ product.js
-│     │  ├─ reple.js
-│     │  └─ user.js
-│     └─ util
-│        └─ upload.js
-└─ README.md
+├─ index.js
+├─ package-lock.json
+├─ package.json
+├─ Procfile
+└─ server
+   ├─ config
+   │  ├─ dev.js
+   │  ├─ key.js
+   │  └─ production.js
+   ├─ model
+   │  ├─ Counter.js
+   │  ├─ Product.js
+   │  ├─ Reple.js
+   │  └─ User.js
+   ├─ router
+   │  ├─ product.js
+   │  ├─ reple.js
+   │  └─ user.js
+   └─ util
+      └─ upload.js
 ```
