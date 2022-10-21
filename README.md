@@ -34,24 +34,6 @@ CRUD 기능 구현 및 배포
 [데모링크 바로가기](https://mycom-market.herokuapp.com/)
 
 <br/>
-
-#### 실행 방법
-
-```sh
-cd server
-
-npm install
-
-npm start
-
-cd ../client
-
-npm install
-
-npm start
-```
-
-<br/>
 <br/>
 
 ## 실행 화면
