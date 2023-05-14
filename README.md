@@ -20,7 +20,9 @@
 
 <br/>
 
-CRUD 기능 구현 및 배포
+~~CRUD 기능 구현 및 배포~~
+
+<b>heroku 무료 플랜 종료로 인한 배포 중지</b>
 
 <br/>
 <br/>
@@ -31,7 +33,7 @@ CRUD 기능 구현 및 배포
 
 #### 데모 링크
 
-[데모링크 바로가기](https://mycom-market.herokuapp.com/)
+~~[데모링크 바로가기](https://mycom-market.herokuapp.com/)~~
 
 <br/>
 <br/>
