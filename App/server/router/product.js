@@ -1,18 +1,18 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const { Product } = require('../model/Product.js');
-const { Counter } = require('../model/Counter.js');
-const { User } = require('../model/User.js');
+const { Product } = require("../model/Product.js");
+const { Counter } = require("../model/Counter.js");
+const { User } = require("../model/User.js");
 
-const setUpload = require('../util/upload.js');
+const setUpload = require("../util/upload.js");
 
-router.post('/submit', (req, res) => {
+router.post("/submit", (req, res) => {
   const temp = req.body;
-  Counter.findOne({ name: 'counter' })
+  Counter.findOne({ name: "counter" })
     .exec()
     .then((counter) => {
-      temp.productNum = counter.productNum;
+      temp.productNum = counter?.productNum;
       User.findOne({ uid: req.body.uid })
         .exec()
         .then((userInfo) => {
@@ -20,7 +20,7 @@ router.post('/submit', (req, res) => {
           const product = new Product(temp);
           product.save().then(() => {
             Counter.updateOne(
-              { name: 'counter' },
+              { name: "counter" },
               { $inc: { productNum: 1 } }
             ).then(() => {
               res.status(200).json({ success: true });
@@ -31,10 +31,10 @@ router.post('/submit', (req, res) => {
     });
 });
 
-router.post('/list', (req, res) => {
+router.post("/list", (req, res) => {
   const sort = {};
 
-  if (req.body.sort === '최신순') {
+  if (req.body.sort === "최신순") {
     sort.createdAt = -1;
   } else {
     sort.repleNum = -1;
@@ -46,7 +46,7 @@ router.post('/list', (req, res) => {
       { content: { $regex: req.body.searchTerm } },
     ],
   })
-    .populate('author')
+    .populate("author")
     .sort(sort)
     .skip(req.body.skip)
     .limit(9)
@@ -59,9 +59,9 @@ router.post('/list', (req, res) => {
     });
 });
 
-router.post('/detail', (req, res) => {
+router.post("/detail", (req, res) => {
   Product.findOne({ productNum: Number(req.body.productNum) })
-    .populate('author')
+    .populate("author")
     .exec()
     .then((doc) => {
       console.log(doc);
@@ -72,7 +72,7 @@ router.post('/detail', (req, res) => {
     });
 });
 
-router.post('/edit', (req, res) => {
+router.post("/edit", (req, res) => {
   const temp = {
     title: req.body.title,
     content: req.body.content,
@@ -94,7 +94,7 @@ router.post('/edit', (req, res) => {
     });
 });
 
-router.post('/delete', (req, res) => {
+router.post("/delete", (req, res) => {
   Product.deleteOne({ productNum: Number(req.body.productNum) })
     .exec()
     .then(() => {
@@ -106,8 +106,8 @@ router.post('/delete', (req, res) => {
 });
 
 router.post(
-  '/image/upload',
-  setUpload('mycom-market/product'),
+  "/image/upload",
+  setUpload("mycom-market/product"),
   (req, res, next) => {
     res.status(200).json({ success: true, filePath: res.req.file.location });
   }
