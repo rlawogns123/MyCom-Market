@@ -37,7 +37,7 @@ router.get("/hello", (req, res) => {
   });
 });
 
-router.get("/list", (req, res) => {
+router.post("/list", (req, res) => {
   const sort = {};
 
   if (req.body.sort === "최신순") {
