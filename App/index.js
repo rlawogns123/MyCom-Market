@@ -21,7 +21,17 @@ app.get("/hello", (req, res) => {
   });
 });
 
-app.listen(port);
+app.listen(port, () => {
+  mongoose
+    .connect(config.mongoURI)
+    .then(() => {
+      console.log(`Example app listening on port ${port}`);
+      console.log("Connecting MongoDB...");
+    })
+    .catch((err) => {
+      console.log(`${err}`);
+    });
+});
 
 // app.get("/", (req, res) => {
 //   res.sendFile(path.join(__dirname, "./client/build/index.html"));
