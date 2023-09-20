@@ -31,6 +31,12 @@ router.post("/submit", (req, res) => {
     });
 });
 
+router.get("/hello", (req, res) => {
+  res.status(200).json({
+    message: "hello",
+  });
+});
+
 router.get("/list", (req, res) => {
   const sort = {};
 
