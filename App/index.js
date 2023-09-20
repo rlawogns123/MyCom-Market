@@ -7,8 +7,8 @@ const port = 4000;
 const config = require("./server/config/key.js");
 
 // app.use(express.static(path.join(__dirname, "./client/build")));
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // app.use("/api/product", require("./server/router/product.js"));
 // app.use("/api/user", require("./server/router/user.js"));
