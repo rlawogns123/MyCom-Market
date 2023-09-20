@@ -31,7 +31,7 @@ router.post("/submit", (req, res) => {
     });
 });
 
-router.post("/list", (req, res) => {
+router.get("/list", (req, res) => {
   const sort = {};
 
   if (req.body.sort === "최신순") {
@@ -71,6 +71,8 @@ router.post("/detail", (req, res) => {
       res.status(400).json({ success: false });
     });
 });
+
+fetch();
 
 router.post("/edit", (req, res) => {
   const temp = {
