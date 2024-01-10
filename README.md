@@ -31,7 +31,7 @@ CRUD 기능 구현 및 배포
 
 #### 데모 링크
 
-[데모링크 바로가기](https://port-0-mycom-market-9bu38x2alhn5tnka.sel4.cloudtype.app/)
+~~[데모링크 바로가기](https://port-0-mycom-market-9bu38x2alhn5tnka.sel4.cloudtype.app/)~~
 
 <br/>
 <br/>
